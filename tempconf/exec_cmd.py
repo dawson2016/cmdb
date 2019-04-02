@@ -3,7 +3,7 @@
 import paramiko
 import subprocess
 def push_nginx(ip,filename):
-    password='huanshuo#888'
+    password='xxx'
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(ip, 22, 'root', password)
