@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>后台管理-日志查看</title>
+	{% include 'index/link-css.html' %}
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                 <a class="navbar-brand" href="#">
+                 <img alt="Brand" style="max-width:100px;margin-top:-14px;" src="../../static/img/QQ.ico">
+                 </a> 
+                <a class="navbar-brand" href="/index">寰烁运维管理系统</a>  
+            </div>
+            <!-- /.navbar-header -->
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="#">
+                                <div>
+                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                    <span class="pull-right text-muted small">4 minutes ago</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> 用户管理</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="/login"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
+                        
+                        <!--li>
+                            <a href="/docker" class="inactive"><i class="fa fa-wrench fa-fw"></i> 测试-平台<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.29"name="wisdomsaas-cms" style="cursor: pointer;"onclick="log(this)">rc-wisdomedu-cms</a></li>
+<li><a ip="192.168.0.29"name="wisdomedu-platform" style="cursor: pointer;"onclick="log(this)">rc-wisdomedu-platform</a></li>
+<li><a ip="192.168.0.29"name="resource" style="cursor: pointer;"onclick="log(this)">rc-resource</a></li>
+<li><a ip="192.168.0.29"name="wisdomedu-zycms" style="cursor: pointer;"onclick="log(this)">rc-wisdomedu-zycms</a></li>
+<li><a ip="192.168.0.29"name="usercenter" style="cursor: pointer;"onclick="log(this)">rc-usercenter</a></li> 
+<li><a ip="192.168.0.29"name="appgateway" style="cursor: pointer;"onclick="log(this)">rc-appgateway</a></li> 
+<li><a ip="192.168.0.29"name="rcenter-web" style="cursor: pointer;"onclick="log(this)">rcenter-web</a></li> 
+<li><a ip="192.168.0.29"name="rcenter-worker"style="cursor: pointer;"onclick="log(this)">rcenter-worker</a></li> 
+<li><a ip="192.168.0.31"name="research" style="cursor: pointer;"onclick="log(this)">rc-research</a></li> 
+<li><a ip="192.168.0.31"name="assignment" style="cursor: pointer;"onclick="log(this)">assignment</a></li> 
+                            </ul>
+                        </li>
+                       <li>
+                            <a href="/docker"><i class="fa fa-wrench fa-fw"></i> 测试-直播<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.30"name="dubbox-live-web" style="cursor: pointer;"onclick="log(this)">rc-dubbox-live-web</a></li>
+<li><a ip="192.168.0.30"name="dubbox-live-rpc" style="cursor: pointer;"onclick="log(this)">rc-dubbox-live-rpc</a></li>
+<li><a ip="192.168.0.30"name="dubbox-live-admin" style="cursor: pointer;"onclick="log(this)">rc-dubbox-live-admin</a></li>
+<li><a ip="192.168.0.30"name="dubbox-plat-rpc" style="cursor: pointer;"onclick="log(this)">rc-dubbox-plat-rpc</a></li>
+<li><a ip="192.168.0.30"name="dubbox-ucenter-rpc-rc" style="cursor: pointer;"onclick="log(this)">rc-dubbox-ucenter-rpc</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/docker"><i class="fa fa-wrench fa-fw"></i> 测试-大赛<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.30"name="dubbox-cim-web" style="cursor: pointer;"onclick="log(this)">rc-dubbox-cim-web</a></li>
+<li><a ip="192.168.0.30"name="dubbox-cim-rpc" style="cursor: pointer;"onclick="log(this)">rc-dubbox-cim-rpc</a></li>
+<li><a ip="192.168.0.30"name="dubbox-cim-admin" style="cursor: pointer;"onclick="log(this)">rc-dubbox-cim-admin</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/docker"><i class="fa fa-wrench fa-fw"></i> 测试-备课单点<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.31"name="autonomic-learn" style="cursor: pointer;"onclick="log(this)">rc-autonomic-learn</a></li>
+<li><a ip="192.168.0.31"name="autonomic-rpc" style="cursor: pointer;"onclick="log(this)">rc-autonomic-rpc</a></li>
+<li><a ip="192.168.0.31"name="autonomic-cms" style="cursor: pointer;"onclick="log(this)">rc-autonomic-cms</a></li>
+<li><a ip="192.168.0.31"name="passport-server" style="cursor: pointer;"onclick="log(this)">rc-passport</a></li>
+                            </ul>
+                        </li-->
+                        <li>
+                            <a href="/k8slog"><i class="fa fa-star  fa-fw"></i> k8s日志<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.40"name="dubbox-cim-admin" style="cursor: pointer;"onclick="k8slog(this)">wbl-dubbox-cim-admin</a></li>
+                            </ul>
+                        </li>
+
+                        <li>
+                            <a href="/docker"><i class="fa fa-star  fa-fw"></i> 万柏林-线上正式大赛<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+ <li><a ip="192.168.0.40"name="dubbox-cim-web" style="cursor: pointer;"onclick="log(this)">wbl-dubbox-cim-web</a></li>
+<li><a ip="192.168.0.40"name="dubbox-cim-rpc" style="cursor: pointer;"onclick="log(this)">wbl-dubbox-cim-rpc</a></li>
+<li><a ip="192.168.0.40"name="dubbox-cim-admin" style="cursor: pointer;"onclick="log(this)">wbl-dubbox-cim-admin</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/docker"><i class="fa fa-star fa-fw"></i> 万柏林-线上正式<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.44"name="wisdomsaas-cms" style="cursor: pointer;"onclick="log(this)">wisdomedu-cms</a></li>
+<li><a ip="192.168.0.44"name="resource" style="cursor: pointer;"onclick="log(this)">resource</a></li>
+<li><a ip="192.168.0.44"name="wisdomsaas-platform" style="cursor: pointer;"onclick="log(this)">wisdomedu-platform</a></li>
+<li><a ip="192.168.0.48"name="passport-server" style="cursor: pointer;"onclick="log(this)">passport-server</a></li>
+<li><a ip="192.168.0.46"name="autonomic-learn" style="cursor: pointer;"onclick="log(this)">autonomic-learn</a></li>
+<li><a ip="192.168.0.46"name="autonomic-rpc" style="cursor: pointer;"onclick="log(this)">autonomic-rpc</a></li>
+<li><a ip="192.168.0.46"name="autonomic-cms" style="cursor: pointer;"onclick="log(this)">autonomic-cms</a></li>
+<li><a ip="192.168.0.47"name="dubbox-live-web" style="cursor: pointer;"onclick="log(this)">dubbox-live-web</a></li>
+<li><a ip="192.168.0.47"name="dubbox-live-admin" style="cursor: pointer;"onclick="log(this)">dubbox-live-admin</a></li>
+<li><a ip="192.168.0.47"name="dubbox-live-rpc" style="cursor: pointer;"onclick="log(this)">dubbox-live-rpc</a></li>
+<li><a ip="192.168.0.47"name="dubbox-plat-rpc-prod" style="cursor: pointer;"onclick="log(this)">dubbox-plat-rpc-v2-prod</a></li>
+<li><a ip="192.168.0.48"name="usercenter" style="cursor: pointer;"onclick="log(this)">usercenter</a></li>
+<li><a ip="192.168.0.48"name="statistical-0.0.1" style="cursor: pointer;"onclick="log(this)">statistical-0.0.1</a></li>
+<li><a ip="192.168.0.44"name="assignment" style="cursor: pointer;"onclick="log(this)">assignment</a></li>
+<li><a ip="192.168.0.48"name="dashboard-wbl-0.0.1" style="cursor: pointer;"onclick="log(this)">dashboard-wbl</a></li>
+<li><a ip="192.168.0.46"name="research" style="cursor: pointer;"onclick="log(this)">wljy</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/docker"><i class="fa fa-star fa-fw"></i> 运城-线上正式大赛<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.54"name="dubbox-cim-web" style="cursor: pointer;"onclick="log(this)">dubbox-cim-web-yc</a></li> 
+<li><a ip="192.168.0.54"name="dubbox-cim-admin" style="cursor: pointer;"onclick="log(this)">dubbox-cim-admin-yc</a></li> 
+<li><a ip="192.168.0.54"name="dubbox-cim-rpc" style="cursor: pointer;"onclick="log(this)">dubbox-cim-rpc</a></li> 
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/docker"><i class="fa fa-star fa-fw"></i> 运城-线上正式<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.97"name="wisdomsaas-cms" style="cursor: pointer;"onclick="log(this)">cms-yc</a></li>
+<li><a ip="192.168.0.97"name="resource" style="cursor: pointer;"onclick="log(this)">res-yc</a></li>
+<li><a ip="192.168.0.97"name="wisdomsaas-platform" style="cursor: pointer;"onclick="log(this)">edu-yc</a></li>
+<li><a ip="192.168.0.97"name="passport-yc" style="cursor: pointer;"onclick="log(this)">passport-yc</a></li>
+<li><a ip="192.168.0.52"name="autonomic-learn" style="cursor: pointer;"onclick="log(this)">autonomic-learn-yc</a></li>
+<li><a ip="192.168.0.52"name="autonomic-rpc" style="cursor: pointer;"onclick="log(this)">autonomic-rpc-yc</a></li>
+<li><a ip="192.168.0.52"name="autonomic-cms" style="cursor: pointer;"onclick="log(this)">autonomic-cms-yc</a></li>
+<li><a ip="192.168.0.54"name="dubbox-live-web" style="cursor: pointer;"onclick="log(this)">dubbox-live-web-yc</a></li>
+<li><a ip="192.168.0.54"name="dubbox-live-rpc" style="cursor: pointer;"onclick="log(this)">dubbox-live-rpc-yc</a></li>
+<li><a ip="192.168.0.54"name="dubbox-live-admin" style="cursor: pointer;"onclick="log(this)">dubbox-live-admin-yc</a></li>
+<li><a ip="192.168.0.54"name="dubbox-plat-rpc-prod" style="cursor: pointer;"onclick="log(this)">dubbox-plat-rpc-prod</a></li>
+<li><a ip="192.168.0.54"name="research" style="cursor: pointer;"onclick="log(this)">research</a></li>
+<li><a ip="192.168.0.97"name="usercenter" style="cursor: pointer;"onclick="log(this)">usercenter-yc</a></li>
+<li><a ip="192.168.0.54"name="assignment" style="cursor: pointer;"onclick="log(this)">assignment</a></li>
+<li><a ip="192.168.0.97"name="appgateway" style="cursor: pointer;"onclick="log(this)">appgateway</a></li> 
+<li><a ip="192.168.0.83"name="dashboard-yc-0.0.1" style="cursor: pointer;"onclick="log(this)">dashboard-yc-0.0.1</a></li> 
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/docker"><i class="fa fa-star fa-fw"></i> 贵州雷山-线上正式<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.61"name="wisdomedu-cms-gz" style="cursor: pointer;"onclick="log(this)">wisdomedu-cms-gz</a></li>
+<li><a ip="192.168.0.61"name="wisdomedu-server-gz" style="cursor: pointer;"onclick="log(this)">wisdomedu-server-gz</a></li>
+<li><a ip="192.168.0.61"name="wisdomedu-platform-gz" style="cursor: pointer;"onclick="log(this)">wisdomedu-platform-gz</a></li>
+<li><a ip="192.168.0.61"name="passport-gz" style="cursor: pointer;"onclick="log(this)">passport-gz</a></li>
+<li><a ip="192.168.0.61"name="dubbox-live-web" style="cursor: pointer;"onclick="log(this)">dubbox-live-web</a></li>
+<li><a ip="192.168.0.61"name="dubbox-live-rpc-gz" style="cursor: pointer;"onclick="log(this)">dubbox-live-rpc-gz</a></li>
+<li><a ip="192.168.0.61"name="usercenter-gz" style="cursor: pointer;"onclick="log(this)">usercenter-gz</a></li>
+<li><a ip="192.168.0.61"name="autonomic-learn" style="cursor: pointer;"onclick="log(this)">autonomic-learn-gz</a></li>
+<li><a ip="192.168.0.61"name="autonomic-rpc" style="cursor: pointer;"onclick="log(this)">autonomic-rpc-gz</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/docker"><i class="fa fa-star fa-fw"></i> 科协-线上正式<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.32.9"name="kexie-cms-kx" style="cursor: pointer;"onclick="log(this)">wisdomedu-cms-kx</a></li>
+<li><a ip="192.168.32.9"name="kexie-server-kx" style="cursor: pointer;"onclick="log(this)">wisdomedu-server-kx</a></li>
+<li><a ip="192.168.32.9"name="passport-kx" style="cursor: pointer;"onclick="log(this)">passport-kx</a></li>
+<li><a ip="192.168.32.10"name="dubbox-live-web" style="cursor: pointer;"onclick="log(this)">dubbox-live-web-kx</a></li>
+<li><a ip="192.168.32.10"name="dubbox-live-admin" style="cursor: pointer;"onclick="log(this)">dubbox-live-admin-kx</a></li>
+<li><a ip="192.168.32.9"name="usercenter-kx" style="cursor: pointer;"onclick="log(this)">usercenter-kx</a></li>
+                            </ul>
+                        </li>                        
+
+                        <!--li>
+                            <a href="/docker"><i class="fa fa-star fa-fw"></i>运城测试<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.41"name="wisdomsaas-platform" style="cursor: pointer;"onclick="log(this)">saas-edu</a></li>
+<li><a ip="192.168.0.41"name="wisdomsaas-cms" style="cursor: pointer;"onclick="log(this)">saas-cms</a></li>
+<li><a ip="192.168.0.41"name="resource" style="cursor: pointer;"onclick="log(this)">saas-res</a></li>
+<li><a ip="192.168.0.41"name="wisdomsaas-zycms" style="cursor: pointer;"onclick="log(this)">saas-rescms</a></li>
+<li><a ip="192.168.0.41"name="appgateway" style="cursor: pointer;"onclick="log(this)">appgateway</a></li> 
+<li><a ip="192.168.0.49"name="autonomic-learn" style="cursor: pointer;"onclick="log(this)">autonomic-learn</a></li>
+<li><a ip="192.168.0.49"name="autonomic-rpc" style="cursor: pointer;"onclick="log(this)">autonomic-rpc</a></li>
+<li><a ip="192.168.0.49"name="autonomic-cms" style="cursor: pointer;"onclick="log(this)">autonomic-cms</a></li>
+<li><a ip="192.168.0.49"name="usercenter" style="cursor: pointer;"onclick="log(this)">usercenter-saas</a></li>
+<li><a ip="192.168.0.49"name="dubbox-live-web" style="cursor: pointer;"onclick="log(this)">dubbox-live-web</a></li>
+<li><a ip="192.168.0.49"name="dubbox-live-rpc" style="cursor: pointer;"onclick="log(this)">dubbox-live-rpc</a></li>
+<li><a ip="192.168.0.49"name="dubbox-live-admin" style="cursor: pointer;"onclick="log(this)">dubbox-live-admin</a></li>
+<li><a ip="192.168.0.41"name="assignment" style="cursor: pointer;"onclick="log(this)">assignment</a></li>
+                            </ul>
+                        </li-->                        
+
+                        <li>
+                            <a href="/docker"><i class="fa fa-star fa-fw"></i>Saas深圳-线上<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" >
+<li><a ip="192.168.0.51"name="passport-server-1.0" style="cursor: pointer;"onclick="log(this)">passport-server</a></li>
+<li><a ip="192.168.0.51"name="gateway-0.0.1" style="cursor: pointer;"onclick="log(this)">gateway</a></li>
+<li><a ip="192.168.0.51"name="wisdomedu-resource-1.0" style="cursor: pointer;"onclick="log(this)">wisdomedu-resource</a></li>
+<li><a ip="192.168.0.51"name="wisdomedu-interface-service-1.0" style="cursor: pointer;"onclick="log(this)">wisdomedu-interface-service</a></li>
+<li><a ip="192.168.0.51"name="wisdomedu-ucc-1.0" style="cursor: pointer;"onclick="log(this)">wisdomedu-ucc</a></li>
+<li><a ip="192.168.0.51"name="registercenter-0.0.1" style="cursor: pointer;"onclick="log(this)">registercenter</a></li>
+<li><a ip="192.168.0.51"name="transfer-0.0.1" style="cursor: pointer;"onclick="log(this)">transfer</a></li>
+<li><a ip="192.168.0.83"name="statistical-0.0.1" style="cursor: pointer;"onclick="log(this)">statistical-0.0.1</a></li>
+<li><a ip="192.168.0.52"name="passport-server-1.0" style="cursor: pointer;"onclick="log(this)">passport-server-standby</a></li>
+<li><a ip="192.168.0.52"name="gateway-0.0.1" style="cursor: pointer;"onclick="log(this)">gateway-standby</a></li>
+<li><a ip="192.168.0.52"name="wisdomedu-resource-1.0" style="cursor: pointer;"onclick="log(this)">wisdomedu-resource-standby</a></li>
+                            </ul>
+                        </li>                        
+
+
+
+
+
+
+
+
+
+                        <li>
+                            <a href="/postman"><i class="fa fa-wrench fa-fw"></i> 接口测试</a>
+                        </li>
+                        <li>
+                            <a href="/temp"><i class="fa fa-wrench fa-fw"></i> Nginx虚拟主机配置</a>
+                        </li>
+                        <li>
+                            <a href="/k8stemp"><i class="fa fa-wrench fa-fw"></i> K8s部署文件yaml生成</a>
+                        </li>
+
+
+
+
+
+ 
+                        <li>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i> 其他</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4 class="page-header" id="logtitle"><i class="fa fa-circle" style="color: #f72925;font-size:20px;"> log server connection failed,pls contact ops !!</i> </h4>
+                </div>
+             {% block menu %}{% endblock %}
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                      <div class="panel panel-default">
+                    <!-- /.panel -->
+                        <div class="panel-heading">
+                            {% block subtitle %}{% endblock %}
+                        </div>
+                        <!-- /.panel-heading -->
+                            <!-- /.row -->
+                        <!-- /.panel-body -->
+                        <div class="panel-body">
+                             {% block content %}{% endblock %}
+                            <!-- /.row -->
+                        </div>
+                    <!-- /.panel -->
+                     </div>
+                </div>
+                <!-- /.col-lg-8 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+<script>
+jsonSocket = new WebSocket("wss://socket.hseduyun.net/.json");
+		jsonSocket.onopen = function() {
+			console.log("JSON socket connected!");
+                        $("#logtitle").html('<i class="fa fa-circle" style="color: #52a736;font-size:20px;"> log server connection ok</i>')
+			jsonSocket.send(JSON.stringify([ "SUBSCRIBE","" ]));
+               		jsonSocket.onmessage = function(messageEvent) {
+			testJson = $.parseJSON(messageEvent.data)
+			strs = testJson.SUBSCRIBE[2];
+                        if (isNaN(strs)){
+                         $("#log").append(strs+'</br>')}
+			}
+		};
+
+function log(that) { var myip=$(that).attr('ip');
+var myname=$(that).attr('name');
+console.log(myip,myname)
+$("#log").empty();
+$.get("/log/", { ip:myip,name:myname } );
+jsonSocket.send(JSON.stringify([ "SUBSCRIBE",myname ]));
+}
+</script>
+</body>
+</html>

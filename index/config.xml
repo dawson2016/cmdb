@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.security.AuthorizationMatrixProperty>
+      <inheritanceStrategy class="org.jenkinsci.plugins.matrixauth.inheritance.NonInheritingStrategy"/>
+      <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:devops</permission>
+      <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:live</permission>
+      <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:devops</permission>
+      <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:devops</permission>
+      <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:devops</permission>
+      <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:live</permission>
+      <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:devops</permission>
+      <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:live</permission>
+      <permission>hudson.model.Item.Build:devops</permission>
+      <permission>hudson.model.Item.Build:live</permission>
+      <permission>hudson.model.Item.Cancel:devops</permission>
+      <permission>hudson.model.Item.Configure:devops</permission>
+      <permission>hudson.model.Item.Delete:devops</permission>
+      <permission>hudson.model.Item.Discover:devops</permission>
+      <permission>hudson.model.Item.Move:devops</permission>
+      <permission>hudson.model.Item.Read:devops</permission>
+      <permission>hudson.model.Item.Read:live</permission>
+      <permission>hudson.model.Item.Workspace:devops</permission>
+      <permission>hudson.model.Run.Delete:devops</permission>
+      <permission>hudson.model.Run.Replay:devops</permission>
+      <permission>hudson.model.Run.Update:devops</permission>
+      <permission>hudson.scm.SCM.Tag:devops</permission>
+      <permission>hudson.scm.SCM.Tag:learn</permission>
+      <permission>hudson.scm.SCM.Tag:live</permission>
+      <permission>hudson.scm.SCM.Tag:platform</permission>
+    </hudson.security.AuthorizationMatrixProperty>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>SVN_URI</name>
+          <description>svn项目选择：运城大赛</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>CIM/dubbox-cim/tags/3.0_yucheng/trunk</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>SVN_URL</name>
+          <description>手动输入，默认为上面svn项目，如果需要更改则手动输入https://svn.hseduyun.net/svn/后面的地址：
+https://svn.hseduyun.net/svn/program/wisdomedu/tags/wisdomedu-1017/ 只需输入program/wisdomedu/tags/wisdomedu-1017</description>
+          <defaultValue>$SVN_URI</defaultValue>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>PKG_NAME</name>
+          <description>请选择需要部署jar包名称</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>dubbox-cim-rpc-1.0-SNAPSHOT.jar</string>
+              <string>dubbox-cim-web-1.0-SNAPSHOT.war</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
+          <name>service</name>
+          <description>选择服务</description>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>web</string>
+              <string>rpc</string>
+            </a>
+          </choices>
+        </hudson.model.ChoiceParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.SubversionSCM" plugin="subversion@2.10.2">
+    <locations>
+      <hudson.scm.SubversionSCM_-ModuleLocation>
+        <remote>https://svn.hseduyun.net/svn/$SVN_URL</remote>
+        <credentialsId></credentialsId>
+        <local>.</local>
+        <depthOption>infinity</depthOption>
+        <ignoreExternalsOption>true</ignoreExternalsOption>
+      </hudson.scm.SubversionSCM_-ModuleLocation>
+    </locations>
+    <excludedRegions></excludedRegions>
+    <includedRegions></includedRegions>
+    <excludedUsers></excludedUsers>
+    <excludedRevprop></excludedRevprop>
+    <excludedCommitMessages></excludedCommitMessages>
+    <workspaceUpdater class="hudson.scm.subversion.UpdateUpdater"/>
+    <ignoreDirPropChanges>false</ignoreDirPropChanges>
+    <filterChangelog>false</filterChangelog>
+    <quietOperation>false</quietOperation>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Maven>
+      <targets>clean install -U</targets>
+      <mavenName>maven</mavenName>
+      <usePrivateRepository>false</usePrivateRepository>
+      <settings class="jenkins.mvn.DefaultSettingsProvider"/>
+      <globalSettings class="jenkins.mvn.DefaultGlobalSettingsProvider"/>
+      <injectBuildVariables>false</injectBuildVariables>
+    </hudson.tasks.Maven>
+    <hudson.tasks.Shell>
+      <command>cd $WORKSPACE
+PKGPOS=`find $(pwd) -name $PKG_NAME`
+echo $PKGPOS
+PKGPRE=${PKG_NAME%-1.0-SNAPSHOT.jar*}
+LANPORT=7091
+PKGPOST=jar
+RUNCMD=&quot;docker run -d --net=host -v /data/docker-logs/:/logs --name $PKGPRE-yc 192.168.0.28:5000/$PKGPRE-yc&quot;
+if [ $PKG_NAME == &apos;dubbox-cim-web-1.0-SNAPSHOT.war&apos; ];
+then
+PKGPRE=${PKG_NAME%-1.0-SNAPSHOT.war*}
+LANPORT=7092
+PKGPOST=war
+RUNCMD=&quot;docker run -d --net=host -v /data/docker-logs/:/logs -v /data/upload/cim:/upload/ --name $PKGPRE-yc 192.168.0.28:5000/$PKGPRE-yc&quot;
+fi
+echo $PKGPOS 
+echo ${PKGPRE}.${PKGPOST}
+rm -rf dockertmp &amp;&amp; mkdir dockertmp &amp;&amp; cd dockertmp &amp;&amp; cp $PKGPOS $PKGPRE.$PKGPOST
+cat &gt; Dockerfile &lt;&lt;EOF
+FROM hs_jre8:latest
+MAINTAINER dawson &lt;dawson_2014@163.com&gt;
+ADD $PKGPRE.$PKGPOST /mnt/$PKGPRE.$PKGPOST
+RUN mkdir -p /upload/live
+EXPOSE $LANPORT
+ENTRYPOINT [&quot;java&quot;,&quot;-jar&quot;,&quot;/mnt/$PKGPRE.$PKGPOST&quot;]
+CMD [&quot;--spring.profiles.active=prod&quot;]
+EOF
+docker build -t $PKGPRE-yc .
+docker tag -f $PKGPRE-yc 192.168.0.28:5000/$PKGPRE-yc
+docker push 192.168.0.28:5000/$PKGPRE-yc
+#非本机运行 需要pull下来 然后run
+echo &apos;start ansible-playbook....&apos;
+cat &gt; run.yml &lt;&lt;EOF
+- hosts: yc_app_node3
+  gather_facts: false
+  tasks:
+    - name: &apos;stop容器&apos;
+      command: docker stop $PKGPRE-yc
+      ignore_errors: yes
+    - name: &apos;delete容器&apos;
+      command: docker rm $PKGPRE-yc
+      ignore_errors: yes
+    - name: &apos;delete镜像&apos;
+      command: docker rmi -f 192.168.0.28:5000/$PKGPRE-yc
+    - name: &apos;pull镜像&apos;
+      command: docker pull 192.168.0.28:5000/$PKGPRE-yc
+    - name: &apos;run镜像&apos;
+      command: $RUNCMD
+
+EOF
+#docker images|grep -E &quot;&apos;&lt;none&gt;&apos;|none&quot;|awk -F [&apos; &apos;]+ &apos;{print \$3}&apos;|xargs docker rmi
+ansible-playbook run.yml</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers/>
+  <buildWrappers/>
+</project>

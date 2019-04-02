@@ -1,0 +1,67 @@
+{% extends "index/base.html" %}
+{% block title %}上线审核{% endblock %} 
+{%block subtitle %}
+<i class="fa fa-gear fa-fw"></i>
+上线审核 
+{% endblock %}
+{% block menu %} {% endblock %} 
+{% block content %}
+<div class="col-lg-12">
+		<table style='text-align: center;'
+			class="table table-bordered table-hover table-striped" id="auditlist">
+			<thead>
+				<tr>
+					<th style='text-align: center;'>项目名称</th>
+					<th style='text-align: center;'>上线环境</th>
+					<th style='text-align: center;'>备注</th>
+					<th style='text-align: center;'>状态</th>
+					<th style='text-align: center;'>操作</th>
+				</tr>
+			</thead>
+			{% for i in data %}
+			<tr>
+				<td id='proname'>{{ i.proname }}</td>
+				<td id='env'>{{ i.proenv }}</td>
+				<td>{{ i.comment }}</td>
+{% if i.status == 2 %}
+				<td><span class="label label-danger">待审核</span></td>
+				<td><button onclick="auditaction('{{ i.proname }}','{{ i.proenv }}','accept')" type="button" id='accept' class="btn btn-success btn-xs ">同意</button>
+                             <button onclick="auditaction('{{ i.proname }}','{{ i.proenv }}','deny')" type="button" id='deny' class="btn btn-danger btn-xs ">拒绝</button></td>
+{% else%}
+				<td><span class="label label-info">无需审核</span></td>
+				<td><button type="button" class="btn btn-success btn-xs disabled">同意</button>
+                             <button class="btn btn-danger btn-xs disabled">拒绝</button></td>
+{% endif %}
+			</tr>
+                            {% endfor %} 
+			</tbody>
+		</table>
+	<!-- /.table-responsive -->
+</div>
+{% include 'index/link-audit-js.html' %}
+<script>
+  $(document).ready(function() {
+   $('#auditlist').DataTable({
+      "order": [[ 3, "asc" ]],
+      responsive: true,
+      bPaginate: true,
+      language: {
+          lengthMenu: '显示<select class="form-control input-xsmall">' + '<option value="5">5</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="40">40</option>' + '<option value="80">80</option>' + '<option value="100">100</option>' + '</select>条记录',//左上角的分页大小显示。
+          search: '搜索：',//右上角的搜索文本，可以写html标签
+      
+          paginate: {//分页的样式内容。
+              previous: "上一页",
+              next: "下一页",
+              first: "第一页",
+              last: "最后"
+          },
+          zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+          //下面三者构成了总体的左下角的内容。
+          info: "总共_TOTAL_  条，显示第_START_ 条到第 _END_ 条",//左下角的信息显示，大写的词为关键字。
+          infoEmpty: "0条记录",//筛选为空时左下角的显示。
+          infoFiltered: ""//筛选之后的左下角筛选提示，
+      },
+    });
+  });
+</script>
+{%endblock%}

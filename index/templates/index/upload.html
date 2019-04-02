@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>hskj apk Uploader</title>
+</head>
+{% include 'index/link-js.html' %}
+<body>
+<h1>apk发布地址</h1>
+<p><input type="file" id="upfile"></p>
+<p>选择发布环境</p>
+<label><input name="server" type="checkbox" id="test" value='wisdomplatform.apk'/>wisdomplatform.apk</label>
+<label><input name="server" type="checkbox" id="wbl" value='wblplatform.apk'/>wblplatform.apk</label>
+<label><input name="server" type="checkbox" id="yc" value='yceduplatform.apk'/>yceduplatform.apk</label>
+<p><input type="button" id="upJQuery" value="上传到服务器"></p>
+<a href="http://download.hseduyun.com/appstore/wisdomplatform.apk">测试访问地址</a>
+<a href="http://download.hseduyun.com/appstore/wblplatform.apk">万柏林访问地址</a>
+<a href="http://download.hseduyun.com/appstore/yceduplatform.apk">运城访问地址</a>
+<script>
+$('#upJQuery').on('click', function() {
+ var fd = new FormData();
+ if($("#wbl").is(":checked")){  
+ env=$("#wbl").val();
+  }  
+ else if ($("#yc").is(":checked")){  
+ env=$("#yc").val();
+  }  
+  else
+ {env='wisdomplatform.apk'}
+ fd.append("upname",env);
+ fd.append("upfile", $("#upfile").get(0).files[0]);
+ $.ajax({
+ url: "/uploadapi/",
+ type: "POST",
+ processData: false,
+ contentType: false,
+ data: fd,
+ success: function(d) {
+ alert(d);
+ }
+ });
+});
+</script>
+</body>
+</html>
+

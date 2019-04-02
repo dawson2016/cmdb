@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+ <title>法宣挂机</title>
+<link href="../../static/css/base.css" rel="stylesheet" type="text/css">
+<link href="../../static/css/index.css" rel="stylesheet" type="text/css">
+</head>
+<body class="sj">
+	<img class="qdcg" src="../../static/img/xxcg.png">
+        
+	<input id="signbtn" class="btn" type="button" name="">
+</body>
+<script src="../../static/js/jquery.min.js"></script>
+<script>
+        $("#signbtn").click(function(){
+                $(".qdcg").show();
+                $(".qdcg").animate({opacity:'0'},2000)
+ $.ajax({
+ url: "/pvapi/",
+ type: "POST",
+ data:{"sign":"phone"},
+ success: function(d) {
+ console.log(d);
+ }
+ });
+   })
+</script>
+</html>

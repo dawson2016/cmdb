@@ -1,0 +1,23 @@
+{% extends "index/sign-base.html" %} 
+{% block subtitle %}
+<i class="fa fa-list-alt  fa-fw">&nbsp</i>  日志展示 
+{% endblock %}
+{% block menu %}
+{% endblock %}
+{% block content %}
+<div id='log' style="background: rgb(36,36,36);color: #ffffff;font-size:14px;max-height:450px;overflow:auto">
+<div id='k8slog' style="background: rgb(36,36,36);color: #ffffff;font-size:14px;max-height:450px;overflow:auto">
+<pre style="background: rgb(36,36,36);color: #ffffff;">
+    ______   _    _                       _                   _                    _____                 _            ______   
+   / / / /  | |  | |                     | |                 | |                  / ____|               (_)           \ \ \ \  
+  / / / /   | |__| |_   _  __ _ _ __  ___| |__  _   _  ___   | |     ___   __ _  | (___   ___ _ ____   ___  ___ ___    \ \ \ \ 
+ < < < <    |  __  | | | |/ _` | '_ \/ __| '_ \| | | |/ _ \  | |    / _ \ / _` |  \___ \ / _ \ '__\ \ / / |/ __/ _ \    > > > >
+  \ \ \ \   | |  | | |_| | (_| | | | \__ \ | | | |_| | (_) | | |___| (_) | (_| |  ____) |  __/ |   \ V /| | (_|  __/   / / / / 
+   \_\_\_\  |_|  |_|\__,_|\__,_|_| |_|___/_| |_|\__,_|\___/  |______\___/ \__, | |_____/ \___|_|    \_/ |_|\___\___|  /_/_/_/  
+                                                                           __/ |                                               
+                                                                          |___/                                                 
+</pre>	
+</div>
+<i></i>默认5000条 有需求可再次点击查看 不显示请联系管理员解决 请勿频繁点击  
+{% include 'index/link-js.html' %}
+{%endblock%}

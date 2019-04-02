@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1 
+kind: Deployment
+metadata:
+  name: {{ appname }}
+  namespace: hsns
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{ appname }}
+    spec:
+      containers:
+      - name: {{ appname }}
+        image: harbor.hseduyun.net/k8s/{{ appname }}:latest
+        resources: 
+          requests:
+            cpu: 800m
+        ports:
+        - containerPort: {{ appport }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ appname }}-svc
+  name: {{ appname }}-svc
+  namespace: hsns
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.backend.loadbalancer.method: drr
+    traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  selector:
+    app: {{ appname }}
+  ports:
+  - port: {{ appport }}
+    protocol: TCP
+    targetPort: {{ appport }}
+    name: {{ appname }}

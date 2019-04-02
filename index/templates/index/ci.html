@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>hskj ci jenkins</title>
+</head>
+<body>
+{% include 'index/link-js.html' %}
+<h1>持续集成部署 仅限正式环境passport  usercenter</h1>
+<p><input type="file" id="upfile"></p>
+<label><input name="server" type="checkbox" id="wbl" value='wbl'/>万柏林</label>
+<label><input name="server" type="checkbox" id="yc" value='yc'/>运城</label>
+<label><input name="server" type="checkbox" id="gz" value='gz'/>贵州</label>
+<label><input name="server" type="checkbox" id="kx" value='kx'/>科协</label>
+<p><input type="button" id="upserver" value="部署到服务器" onclick="upfile()"></p>
+<p>注:日志末尾显示 deploy success 则为部署成功</p>
+<p id='scjd'></p>
+<div id='log'></div>
+<script>
+function upfile(){
+    var upfile=document.getElementsByTagName('input')[0].files[0];
+    var fd=new FormData();
+    var xhr=new XMLHttpRequest();
+    var env=$(":checked").val()  
+    xhr.open('post','/ciapi/?env='+env,true);
+    xhr.onreadystatechange=function (){
+        if(this.readyState==4){
+            document.getElementById('scjd').innerHTML=this.responseText;
+            logres();           
+        }
+    }
+    xhr.upload.onprogress=function (ev){
+        if(ev.lengthComputable){
+            var precent=100 * ev.loaded/ev.total;
+            document.getElementById('scjd').innerHTML='上传进度:'+Math.floor(precent)+'%';
+            if (Math.floor(precent)==100){document.getElementById('scjd').innerHTML='请等待日志显示...'}
+        }
+    }
+    fd.append('upfile',upfile);
+    xhr.send(fd);
+}
+var logres= function () {
+                window.setTimeout(function () {
+                    $.get("/logapi/", 
+                        {"timed": new Date().getTime()}, 
+                        function (data) {
+                            $("#log").append(data + " <br/>");
+                    });
+                }, 100);
+            };
+</script>
+</body>
+</html>

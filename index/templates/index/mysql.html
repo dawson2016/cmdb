@@ -1,0 +1,50 @@
+{% extends "index/base.html" %}
+{% block title %}Mysql授权配置{% endblock %} 
+{%block subtitle %}
+<i class="fa fa-gear fa-fw"></i>
+Mysql授权配置管理{% endblock %} 
+{% block menu %} {% endblock %} 
+{% block content %}
+<div class="col-lg-12">
+   <div class="form-group input-group col-lg-8">
+		<span  class="input-group-addon">数据库IP+port</span>
+		<input id="mysqlip" type="text" class="form-control" placeholder="Mysql">
+		<span  class="input-group-addon">连接密码</span>
+		<input id="mysqlpwd" type="password" class="form-control" placeholder="Password">
+   </div>
+   <div class="form-group input-group col-lg-8">
+		<span  class="input-group-addon">授权用户名</span>
+		<input id="grantname" type="text" class="form-control" placeholder="grantname">
+		<span  class="input-group-addon">授权密码</span>
+		<input id="grantpassword" type="text" class="form-control" placeholder="grantpassword">
+		<span  class="input-group-addon">授权库名</span>
+		<input id="grantdb" type="text" class="form-control" placeholder="grantdb">
+   </div>
+   <div class="form-group">
+		<label>权限选择</label>
+		<label class="radio-inline">
+			<input type="radio" name="qx" id="ro" value="ro" checked="">只读
+		</label>
+		<label class="radio-inline">
+			<input type="radio" name="qx" id="rw" value="rw">读写
+		</label>
+    </div>
+   <button type="button" id="qrsq" class="btn btn-warning">确认授权</button>
+   
+	</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script>
+        $("#qrsq").click(function(){
+		var ip = $('#mysqlip').val();
+		var pwd = $('#mysqlpwd').val();
+		var gname = $('#grantname').val();
+		var gpwd = $('#grantpassword').val();
+		var gdb = $('#grantdb').val();
+		var qx=$('input:radio:checked').val()
+	$.post("/mysqlapi/", { ip:ip,pwd:pwd,gname:gname,gpwd:gpwd,gdb:gdb,qx:qx, },
+			   function(arg){
+		      console.log(arg) 
+			   });
+        });
+</script>
+{%endblock%}

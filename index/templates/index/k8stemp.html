@@ -1,0 +1,48 @@
+{% extends "index/sign-base01.html" %}
+{% block title %}配置文件生成{% endblock %} 
+{%block subtitle %}
+<i class="fa fa-gear fa-fw"></i>
+自动生成k8s部署yaml格式文件 
+{% endblock %}
+{% block menu %} {% endblock %} 
+{% block content %}
+<div class="col-lg-12">
+   <div class="form-group input-group col-lg-10">
+                   <input id="appname" placeholder="应用名称" type="text" class="form-control">
+                  <span class="input-group-btn">
+                  </span>
+                   <input id="appport" placeholder="应用端口" type="text" class="form-control">
+
+                  <span class="input-group-btn">
+                  </span>
+<div class="form-group"  style="width: 150px;">
+  <select id='webrpc' class="form-control">
+   <option>web</option>
+   <option>rpc</option>
+   </select>
+</div>
+                  <span class="input-group-btn">
+                  <button style="margin-left: 25px;margin-right: 25px;" onclick="addconf(this)" class="btn btn-primary" type="button"><i class="fa fa-plus"> 生成yaml</i>
+                   </button>
+                  </span>
+
+                  <span class="input-group-btn">
+                  </span>
+                   <span class="input-group-btn">
+                     <span id="tip" style="margin-left: 25px;margin-right: 25px;font-size: 18px;"></span>
+                  </span>
+     </div>
+    <div id='confview' class="col-sm-12">
+    <div>
+<div><h4><font color="red">*必须能够通过应用名称匹配到包和yaml文件，如:应用名称passport-包名passport-server-1.0-SNAPSHOT.jar-yaml文件passport.yaml</h4></div>
+<div><h4><font color="red">*应用需要域名对外暴露选web,否则rpc</h4></div>
+<div><h4><font color="red">*yaml文件命名为应用名称.yaml提交到和pom同级位置</h4></div>
+
+	<!-- /.table-responsive -->
+</div>
+<!-- 模态框 -->
+
+{% include 'index/link-k8stemp-js.html' %}
+<script>
+</script>
+{%endblock%}

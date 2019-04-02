@@ -1,0 +1,104 @@
+{% extends "index/base.html" %}
+{% block title %}端口配置{% endblock %} 
+{%block subtitle %}
+<i class="fa fa-gear fa-fw"></i>
+端口映射 
+<div class="pull-right">
+<button onclick="syncport(this)" type="button" class="btn btn-default btn-xs "><i class="fa fa-refresh fa-fw"></i> 同步映射</button>
+</div>
+{% endblock %}
+{% block menu %} {% endblock %} 
+{% block content %}
+<div class="col-lg-12">
+   <div class="form-group input-group col-lg-10">
+                 <input id="ipaddr" placeholder="请输入IP地址" type="text" class="form-control">
+                  <span class="input-group-btn">
+                  </span>
+                   <input id="lanport" placeholder="请输入内部端口" type="text" class="form-control">
+                  <span class="input-group-btn">
+                  </span>
+                   <input id="wanport" placeholder="请输入外部端口" type="text" class="form-control">
+                  <span class="input-group-btn">
+                  <button style="margin-left: 25px;margin-right: 25px;" onclick="addport(this)" class="btn btn-primary" type="button"><i class="fa fa-plus"> 新增映射</i>
+                   </button>
+                  </span>
+                   <span class="input-group-btn">
+                     <span id="tip" style="margin-left: 25px;margin-right: 25px;font-size: 18px;"></span>
+                  </span>             
+     </div>
+		<table style='text-align: center;'
+			class="table table-bordered table-hover table-striped" id="portlist">
+			<thead>
+				<tr>
+					<th style='text-align: center;'>IP地址</th>
+					<th style='text-align: center;'>内部端口</th>
+					<th style='text-align: center;'>外部端口</th>
+					<th style='text-align: center;'>备注端口用途</th>
+					<th style='text-align: center;'>端口操作</th>
+					<th style='text-align: center;'>编辑用途</th>
+				</tr>
+			</thead>
+			{% for i in data %}
+			<tr>
+				<td>{{ i.ipaddr.lanip}}</td>
+				<td>{{ i.lanport}}</td>
+				<td>{{ i.wanport}}</td>
+				<td>{{ i.comment}}</td>
+				<td>{{ i.status}}</td>
+				<td><button onclick="editport(this)" type="button" class="btn btn-primary btn-xs"  data-id="{{ i.instanceid}}" data-toggle="modal" data-target="#myModal">编辑</button></td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	<!-- /.table-responsive -->
+</div>
+<!-- 模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h5 class="modal-title" id="myModalLabel">修改外网端口用途 : </h5>
+				<h5 class="modal-title" id="myModalLabel-id"></h5>
+			</div>
+			<div class="modal-body">
+			<textarea class="form-control" rows="2" id="usage"></textarea>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button onclick="saveport(this)" type="button" class="btn btn-primary">
+					提交更改
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+{% include 'index/link-port-js.html' %}
+<script>
+  $(document).ready(function() {
+   $('#portlist').DataTable({
+      responsive: true,
+      bPaginate: true,
+      language: {
+          lengthMenu: '显示<select class="form-control input-xsmall">' + '<option value="5">5</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="40">40</option>' + '<option value="80">80</option>' + '<option value="100">100</option>' + '</select>条记录',//左上角的分页大小显示。
+          search: '搜索：',//右上角的搜索文本，可以写html标签
+      
+          paginate: {//分页的样式内容。
+              previous: "上一页",
+              next: "下一页",
+              first: "第一页",
+              last: "最后"
+          },
+          zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+          //下面三者构成了总体的左下角的内容。
+          info: "总共_TOTAL_  条，显示第_START_ 条到第 _END_ 条",//左下角的信息显示，大写的词为关键字。
+          infoEmpty: "0条记录",//筛选为空时左下角的显示。
+          infoFiltered: ""//筛选之后的左下角筛选提示，
+      },
+    });
+  });
+</script>
+{%endblock%}

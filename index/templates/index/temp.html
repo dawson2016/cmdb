@@ -1,0 +1,53 @@
+{% extends "index/sign-base01.html" %}
+{% block title %}配置文件生成{% endblock %} 
+{%block subtitle %}
+<i class="fa fa-gear fa-fw"></i>
+推送Nginx虚拟主机配置文件 
+{% endblock %}
+{% block menu %} {% endblock %} 
+{% block content %}
+<div class="col-lg-12">
+   <div class="form-group input-group col-lg-10">
+                   <input id="domain" placeholder="aa.bb.com" type="text" class="form-control">
+                  <span class="input-group-btn">
+                  </span>
+                   <input id="backend" placeholder="ipaddr:port" type="text" class="form-control">
+                  <span class="input-group-btn">
+                  <button style="margin-left: 25px;margin-right: 25px;" onclick="addconf(this)" class="btn btn-primary" type="button"><i class="fa fa-plus"> 预览配置</i>
+                   </button>
+                  </span>
+                   <input id="file_name" placeholder="xx.conf文件名" type="text" class="form-control">
+                  <span class="input-group-btn">
+                  </span>
+<div class="form-group"  style="width: 120px;">
+  <select id='serverip' class="form-control">
+   <option>选择服务器</option>
+   <option>192.168.0.13</option>
+   <option>192.168.0.43</option>
+   </select>
+</div>
+
+                  <span class="input-group-btn">
+                  <button style="margin-left: 25px;margin-right: 25px;" onclick="pushconf(this)" class="btn btn-success" type="button"><i class="fa fa-upload"> 推送到服务器 </i>
+                   </button>
+                  </span>
+                   <span class="input-group-btn">
+                     <span id="tip" style="margin-left: 25px;margin-right: 25px;font-size: 18px;"></span>
+                  </span>             
+     </div>
+    <div id='confview' class="col-sm-12">
+    <div>
+<div><h4>*.hseduyun.net/com ,*.yceduyun.com 选择0.13 服务器</h4></div>
+<div><h4>*.wbljy.cn 选择0.43 服务器</h4></div>
+<div><h4>请以xx.conf命名 如xx.hseduyun.conf</h4></div>
+<div><h4>部署到k8s的,后端统一指向192.168.32.12:23456</h4></div>
+
+
+	<!-- /.table-responsive -->
+</div>
+<!-- 模态框 -->
+
+{% include 'index/link-temp-js.html' %}
+<script>
+</script>
+{%endblock%}

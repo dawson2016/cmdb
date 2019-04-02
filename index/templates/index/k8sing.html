@@ -1,0 +1,89 @@
+{% extends "index/base.html" %}
+{% block title %}k8s域名配置{% endblock %} 
+{%block subtitle %}
+<i class="fa fa-gear fa-fw"></i>
+ingress列表 
+<div class="pull-right">
+<button onclick="syncport(this)" type="button" class="btn btn-default btn-xs "><i class="fa fa-refresh fa-fw"></i> 刷新配置</button>
+</div>
+{% endblock %}
+{% block menu %} {% endblock %} 
+{% block content %}
+<div class="col-lg-12">
+   <div class="form-group input-group col-lg-10">
+     </div>
+		<table style='text-align: center;word-break:break-all; word-wrap:break-all;'
+			class="table table-bordered table-hover table-striped" id="portlist">
+			<thead>
+				<tr>
+					<th style='text-align: center;'>命名空间</th>
+					<th style='text-align: center;'>域名</th>
+					<th style='text-align: center;'>ing名称</th>
+					<th style='text-align: center;'>服务名</th>
+					<th style='text-align: center;'>服务端口</th>
+					<th style='text-align: center;'>更新</th>
+				</tr>
+			</thead>
+			{% for i in allres %}
+			<tr>
+				<td>{{ i.ns}}</td>
+				<td>{{ i.host}}</td>
+				<td>{{ i.ingname}}</td>
+				<td>{{ i.servicename}}</td>
+				<td>{{ i.serviceport}}</td>
+				<td><button onclick="editing(this)" type="button" class="btn btn-info btn-xs"  data-id="{{ i.ns}}" data-toggle="modal" data-target="#myModal">编辑</button></td>
+			</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	<!-- /.table-responsive -->
+</div>
+<!-- 模态框 -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h5 class="modal-title" id="myModalLabel">修改域名配置 多域名逗号分隔: </h5>
+				<h5 class="modal-title" id="myModalLabel-id" style="display:none;"></h5>
+			</div>
+			<div class="modal-body">
+			<textarea class="form-control" rows="2" id="usage"></textarea>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+				</button>
+				<button onclick="saveing(this)" type="button" class="btn btn-primary">
+					提交更改
+				</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+{% include 'index/link-k8sing-js.html' %}
+<script>
+  $(document).ready(function() {
+   $('#portlist').DataTable({
+      responsive: true,
+      bPaginate: true,
+      language: {
+          lengthMenu: '显示<select class="form-control input-xsmall">' + '<option value="5">5</option>' + '<option value="10">10</option>' + '<option value="20">20</option>' + '<option value="40">40</option>' + '<option value="80">80</option>' + '<option value="100">100</option>' + '</select>条记录',//左上角的分页大小显示。
+          search: '搜索：',//右上角的搜索文本，可以写html标签
+          paginate: {//分页的样式内容。
+              previous: "上一页",
+              next: "下一页",
+              first: "第一页",
+              last: "最后"
+          },
+          zeroRecords: "没有内容",//table tbody内容为空时，tbody的内容。
+          //下面三者构成了总体的左下角的内容。
+          info: "总共_TOTAL_  条，显示第_START_ 条到第 _END_ 条",//左下角的信息显示，大写的词为关键字。
+          infoEmpty: "0条记录",//筛选为空时左下角的显示。
+          infoFiltered: ""//筛选之后的左下角筛选提示，
+      },
+    });
+  });
+</script>
+{%endblock%}

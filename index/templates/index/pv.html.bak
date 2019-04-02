@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>hskj ci jenkins</title>
+</head>
+{% include 'index/link-js.html' %}
+{% for i in data %}
+<p>{{i.pv}}</p>
+{% endfor %}
+<p><input type="button" id="upJQuery" onclick="mypv()">投票</p>
+<script>
+function mypv() {
+ $.ajax({
+ url: "/pvapi/",
+ type: "POST",
+ success: function(d) {
+ alert(d);
+ }
+ });
+};
+</script>
+</body>
+</html>
+

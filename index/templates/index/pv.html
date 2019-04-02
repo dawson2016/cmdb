@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>万柏林教育</title>
+        <link href="../../static/css/base.css" rel="stylesheet" type="text/css">
+        <link href="../../static/css/index.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+{% for i in data %}
+	<div class="sign_num" id="result">签到人数：<span id='pv'>{{i.pv}}</span></div>
+{% endfor %}
+	<img class="ewm_bg" src="../../static/img/ewm.png">
+	<img class="ewm_bg1" src="../../static/img/hsewm.png">
+	<p class="ewm_p">微信扫屏幕上方二维码签到</p>
+<script src="../../static/js/jquery.min.js"></script>
+<script>
+function mypv() {
+ $.ajax({
+ url: "/pvsum/",
+ type: "POST",
+ success: function(d) {
+ $("#pv").html(d); 
+ }
+ });
+};
+setInterval("mypv()",3000)
+</script>
+</body>
+</html>

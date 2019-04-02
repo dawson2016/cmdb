@@ -1,0 +1,46 @@
+{% extends "index/base.html" %} 
+{% block title %}监控项选择{% endblock %}
+{% block subtitle %}<i class="fa fa-bar-chart-o fa-fw"></i> 监控图
+<div class="pull-right">
+<button onclick="freshgraph(this)" type="button" class="btn btn-default btn-xs "><i class="fa fa-refresh fa-fw"></i> 刷新</button>
+</div>
+{% endblock %}
+{% block menu %}
+<div class="col-lg-2">
+ 主机类型 <select id='ostype' class="form-control">
+   <option>请选择</option>
+   <option>linux</option>
+   <option>windows</option>
+     </select>
+</div>
+<div class="col-lg-2">
+ 主机IP <select id='hostip' class="form-control" >
+       <option disabled="disabled">请选择上一项</option>
+      </select>
+</div>
+<div class="col-lg-2">
+ 监控项 <select id='monitordetail' class="form-control" >
+       <option disabled="disabled">请选择</option>
+       <option value="vCPUUsagePercent">CPU使用率</option>
+       <option value="CpuLoadAvg15">CPU15分钟负载</option>
+       <option value="MemUsedBytes">内存使用量</option>
+       <option value="MemUsedPercent">内存使用率</option>
+       <option value="DiskUsedPercent">总磁盘使用率</option>
+       <option value="DiskDUsedPercent">D盘使用率(Win)</option>
+       <option value="RootUsedPercent">根分区使用率(Linux)</option>
+       <option value="WebInBitsPerSecond">入口带宽</option>
+       <option value="WebOutBitsPerSecond">出口带宽</option>
+       <option value="TcpCurrentEstab">TCP连接数</option>
+       <option value="DiskUsedPercent">总磁盘使用率</option>
+     </select>
+</div>
+<div class="col-lg-12">
+     <h4 class="page-body"></h4>
+</div>
+{% endblock %}
+{% block content %}
+<div class="col-lg-12">
+	<div id="graph"></div>
+</div>
+{% include 'index/link-js.html' %}
+{%endblock%}
