@@ -29,7 +29,7 @@ def logincheck(request):
     else:
         return HttpResponse('error')
 def bcc_list():
-    credentials = BceCredentials("9f362a0d8f074c92a89332e4e09bd1e6","dc1f321915e74a62974b473d78f5d29b")
+    credentials = BceCredentials("xxx","xxx")
     http_method = "GET"
     path = "/v2/instance"
     headers = {"host": "bcc.bj.baidubce.com",
@@ -148,8 +148,8 @@ def stamp2utc(stamp):
     return utc
 def bcm_data_api(request,instanceid,monitortype,datatype='average'):
     headers = {}
-    accesskey = '9f362a0d8f074c92a89332e4e09bd1e6'
-    secretkey = 'dc1f321915e74a62974b473d78f5d29b'
+    accesskey = 'xxx'
+    secretkey = 'xxx'
     headers['Content-Type'] = 'application/json'
     headers['Host'] = 'bcm.bj.baidubce.com'
     start1=int(time.time())-432000
@@ -165,14 +165,14 @@ def bcm_data_api(request,instanceid,monitortype,datatype='average'):
     }
     request = {
         'method': 'GET',
-        'uri': '/json-api/v1/metricdata/cefb655476a0469cb8a75f0ef10cc17f/BCE_BCC/'+str(monitortype),
+        'uri': '/json-api/v1/metricdata/xxx/BCE_BCC/'+str(monitortype),
         'params': query_params,
         'headers': headers
     }
     signer = BceSigner(accesskey, secretkey)
     auth = signer.gen_authorization(request)
     headers['Authorization'] = auth
-    url = "http://bcm.bj.baidubce.com/json-api/v1/metricdata/cefb655476a0469cb8a75f0ef10cc17f/BCE_BCC/"+str(monitortype)
+    url = "http://bcm.bj.baidubce.com/json-api/v1/metricdata/xxx/BCE_BCC/"+str(monitortype)
     response = requests.get(url, headers=headers, params=query_params)
     if response.status_code==200:
         data=response.json()["dataPoints"]
