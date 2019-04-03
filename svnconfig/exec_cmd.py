@@ -5,7 +5,7 @@ def addutg(group,user):
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         para=group+' '+user
         cmd = '/usr/bin/python /root/addgroup.py '+' '+para
 	ssh = paramiko.SSHClient()
@@ -21,7 +21,7 @@ def delutg(group,user):
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         para=group+' '+user
         cmd = '/usr/bin/python /root/delutg.py '+' '+para
 	ssh = paramiko.SSHClient()
@@ -37,7 +37,7 @@ def deluser(user):
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         cmd = '/usr/bin/python /root/deluser.py '+' '+user
 	ssh = paramiko.SSHClient()
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -52,7 +52,7 @@ def addgtp(pro,group):
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         para=pro+' '+'@'+group
         cmd = '/usr/bin/python /root/section.py '+' '+para
 	ssh = paramiko.SSHClient()
@@ -69,7 +69,7 @@ def delgtp(pro,group):
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         para=pro+' '+group
         cmd = '/usr/bin/python /root/delgroup.py '+' '+para
 	ssh = paramiko.SSHClient()
@@ -85,7 +85,7 @@ def sync_svn():
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         cmd = '/usr/bin/python /root/syncsvn.py '
 	ssh = paramiko.SSHClient()
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -99,7 +99,7 @@ def sync_user():
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         cmd = '/usr/bin/python /root/syncuser.py '
 	ssh = paramiko.SSHClient()
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -113,7 +113,7 @@ def sync_group():
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         cmd = '/usr/bin/python /root/syncgroup.py '
 	ssh = paramiko.SSHClient()
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -127,7 +127,7 @@ def sync_pro():
 	hostname='192.168.0.36'
 	port=22
 	username='root'
-	password='huanshuo#888'
+	password='xxx'
         cmd = '/usr/bin/python /root/syncpro.py '
 	ssh = paramiko.SSHClient()
 	ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())

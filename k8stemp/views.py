@@ -46,7 +46,7 @@ def sendpicmail(request,url,towho):
     receiver = towho
     smtpserver = 'smtp.qq.com'
     username = '87075387@qq.com'
-    password = 'dwienqivqfbxbifa'
+    password = 'xxxx'
     smtp = smtplib.SMTP()
     smtp.connect('smtp.qq.com')
     smtp.ehlo()

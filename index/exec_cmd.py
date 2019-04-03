@@ -5,8 +5,8 @@ import subprocess
 import redis
 import time
 def scp_put(filename):
-    ip='192.168.0.46'
-    password='huanshuo#888'
+    ip='xxx'
+    password='xxx'
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(ip, 22, 'root', password)
@@ -20,12 +20,12 @@ def scp_put(filename):
         sftp.put(local_file, remote_file)
 def log_out(lanip,dockername):
     ip=str(lanip)
-    password='huanshuo#888'
+    password='xxx'
     line_num=0
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(ip, 22, 'root', password)
-    r=redis.StrictRedis(host='192.168.0.27', port=6379,password='Hs123#')
+    r=redis.StrictRedis(host='xx', port=xxx,password='xxx')
     #cmd='journalctl -u docker -f --no-pager'
     cmd='docker logs -f  --tail 100 '+str(dockername)
     stdin, stdout, stderr = ssh.exec_command(cmd)
