@@ -14,6 +14,7 @@ import cStringIO
 import smtplib
 import threading 
 import time 
+import pytz
 from email.header import Header
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -46,7 +47,7 @@ def sendpicmail(request,url,towho):
     receiver = towho
     smtpserver = 'smtp.qq.com'
     username = '87075387@qq.com'
-    password = 'xxxx'
+    password = 'dwienqivqfbxbifa'
     smtp = smtplib.SMTP()
     smtp.connect('smtp.qq.com')
     smtp.ehlo()
@@ -128,6 +129,7 @@ def k8slog(request):
         v2=client.ExtensionsV1beta1Api()
         allns=[ns]
         allres=[]
+	bjtz = pytz.timezone('Asia/Shanghai')
         if ns=='all':
                 allns=[]
                 nss=v1.list_namespace()
@@ -137,7 +139,13 @@ def k8slog(request):
         for ns in allns:
                 pods=v1.list_namespaced_pod(ns)
                 for pod in pods.items:
-                        allres.append({'ns':ns,'podname':pod.metadata.name})
+			mypodstatus=pod.status.container_statuses[0].state
+			container_id=pod.status.container_statuses[0].image.split(':')[1]
+			if mypodstatus==None:
+				podstatus=None
+			else:
+				podstatus=mypodstatus
+			allres.append({'ns':ns,'podname':str(pod.metadata.name),'create_time':str(pod.metadata.creation_timestamp.astimezone(bjtz))[:-6],'podstatus':podstatus,'container_id':container_id})
         return render(request,'index/k8slog.html',locals())
         #return HttpResponse(allres)
 def k8slogapi(request):
