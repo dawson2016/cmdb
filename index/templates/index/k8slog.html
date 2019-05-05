@@ -18,6 +18,9 @@
 				<tr>
 					<th style='text-align: center;'>部署环境</th>
 					<th style='text-align: center;'>应用名</th>
+					<th style='text-align: center;'>创建时间</th>
+					<th style='text-align: center;width: 35px;'>版本</th>
+					<th style='text-align: center;width: 35px;'>状态</th>
 					<th style='text-align: center;'>日志操作</th>
 				</tr>
 			</thead>
@@ -25,6 +28,9 @@
 			<tr>
 				<td>{{ i.ns }}</td>
 				<td>{{ i.podname }}</td>
+				<td>{{ i.create_time }}</td>
+				<td>{{ i.container_id }}</td>
+				<td>{% if not  i.podstatus.waiting %}<p style="color:green" class="fa fa-check fa-1x"></p>{% else %}<p style="color:red" class="fa fa-warning fa-1x"></p>{% endif %}</td>
 				<td>最近&nbsp<input class="form-control" style="width: 70px;height: 25px;" id="logline" value=1000>条 &nbsp<button onclick="showlog(this)" type="button" class="btn btn-warning btn-xs"><i class="fa fa-desktop"></i>&nbsp查看</button> &nbsp &nbsp<button onclick="downlog(this)" type="button" class="btn btn-primary btn-xs"><i class="fa fa-download"></i>&nbsp下载</button></td>
 			</tr>
 			{% endfor %}
